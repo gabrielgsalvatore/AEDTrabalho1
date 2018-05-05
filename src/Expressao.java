@@ -17,8 +17,7 @@ public class Expressao {
     
     public Expressao(String s)
     {
-        String aux = s.replaceAll("\\s","");
-        this.expressao = aux.toCharArray();
+        this.expressao = s.replaceAll("\\s","").toCharArray();
     }
     
     
