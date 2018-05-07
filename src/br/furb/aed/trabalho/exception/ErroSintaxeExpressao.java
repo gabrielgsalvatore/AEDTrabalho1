@@ -20,7 +20,7 @@ public class ErroSintaxeExpressao extends RuntimeException {
 	 * @param termoLeitura
 	 */
 	public ErroSintaxeExpressao(String termoLeitura) {
-		super("Erro de sintaxe [" + termoLeitura + "]");
+		super("\"O jovem não sabe como escrever uma expressão básica?\"\n\nOps! Erro de sintaxe no ponto [" + termoLeitura + "]");
 	}
 
 }

@@ -114,9 +114,24 @@ public class CalculadoraEtapaB extends CalculadoraEtapaBase {
 			}
 			
 			termo += charLeitura;
+			
+		} else if (ehEspaco(charLeitura)) {
+			adicionarTermo(termos, termo);
+			
+			return Calculadora.TERMO_VAZIO;
 		}
 		
 		return termo;
+	}
+
+	/**
+	 * Verifica se é um espaço
+	 * 
+	 * @param charLeitura
+	 * @return
+	 */
+	private boolean ehEspaco(char charLeitura) {
+		return ' ' == charLeitura;
 	}
 
 	/**

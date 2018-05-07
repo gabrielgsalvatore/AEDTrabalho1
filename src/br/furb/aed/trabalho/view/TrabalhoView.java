@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.furb.aed.trabalho.Calculadora;
@@ -44,7 +45,7 @@ public class TrabalhoView {
 		frmTrabalho = new JFrame();
 		frmTrabalho.setResizable(false);
 		frmTrabalho.setTitle("Trabalho 1 - AED");
-		frmTrabalho.setBounds(100, 100, 602, 154);
+		frmTrabalho.setBounds(100, 100, 592, 193);
 		frmTrabalho.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -81,8 +82,12 @@ public class TrabalhoView {
 	
 	
 	private void calcularClick() {
-		double valor = calculadoraFacade.calcularExpressao(txtExpressao.getText());
-		txtResultado.setText(String.valueOf(valor));
+		try {
+			double valor = calculadoraFacade.calcularExpressao(txtExpressao.getText());
+			txtResultado.setText(String.valueOf(valor));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "O jovem não sabe como escrever uma expressão básica?", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void mostrar() {
