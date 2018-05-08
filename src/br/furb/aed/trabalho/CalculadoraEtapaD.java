@@ -1,5 +1,6 @@
 package br.furb.aed.trabalho;
 
+import br.furb.aed.trabalho.exception.ErroNaNException;
 import br.furb.aed.trabalho.exception.ErroSintaxeExpressao;
 import br.furb.aed.trabalho.fila.Fila;
 import br.furb.aed.trabalho.pilha.Pilha;
@@ -14,6 +15,8 @@ import br.furb.aed.trabalho.pilha.PilhaVetor;
  *
  */
 public class CalculadoraEtapaD extends CalculadoraEtapaBase {
+
+	private static final double DOUBLE_ZERO = 0D;
 
 	private final Fila<String> exprPosfixada;
 	private final int tamanhoPilha;
@@ -69,6 +72,9 @@ public class CalculadoraEtapaD extends CalculadoraEtapaBase {
 		} else if (Operador.MULTIPLICACAO.getString().equals(operador)) {
 			resultado = valor1 * valor2;
 		} else if (Operador.DIVISAO.getString().equals(operador)) {
+			if (DOUBLE_ZERO == valor2) {
+				throw new ErroNaNException();
+			}
 			resultado = valor1 / valor2;
 		}
 		
@@ -94,7 +100,11 @@ public class CalculadoraEtapaD extends CalculadoraEtapaBase {
 	 */
 	private Double retirarDadoDaPilha(Pilha<String> pilha) {
 		if (!pilha.estaVazia()) {
-			return Double.valueOf(pilha.pop().replaceAll(",", "."));
+			Double valor = Double.valueOf(pilha.pop().replaceAll(",", "."));
+			if (Double.isNaN(valor)) {
+				throw new ErroNaNException();
+			}
+			return valor;
 		}
 		
 		throw new ErroSintaxeExpressao("");

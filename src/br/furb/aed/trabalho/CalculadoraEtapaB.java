@@ -106,7 +106,7 @@ public class CalculadoraEtapaB extends CalculadoraEtapaBase {
 	private String processarChar(ListaEstatica<String> termos, char charLeitura, String termo) {
 		if (ehCharValido(charLeitura)) {
 			
-			if (ehOperadorOuParentese(charLeitura)) {
+			if (ehOperadorOuParentese(charLeitura) || falsoNegativo(termo, charLeitura)) {
 				adicionarTermo(termos, termo);
 				adicionarTermo(termos, charLeitura);
 				
@@ -122,6 +122,17 @@ public class CalculadoraEtapaB extends CalculadoraEtapaBase {
 		}
 		
 		return termo;
+	}
+
+	/**
+	 * Verifica se é um caso do tipo "2-3" onde o esperado é "2 - 3" e não "2 -3".
+	 * 
+	 * @param termo
+	 * @param charLeitura
+	 * @return
+	 */
+	private boolean falsoNegativo(String termo, char charLeitura) {
+		return !termo.isEmpty() && ehOperadorSubtracao(charLeitura) && proximoEhNumero();
 	}
 
 	/**
@@ -200,7 +211,17 @@ public class CalculadoraEtapaB extends CalculadoraEtapaBase {
 	 * @return
 	 */
 	private boolean ehNumeroNegativo(char charLeitura) {
-		return Operador.SUBTRACAO.getChar() == charLeitura && proximoEhNumero();
+		return ehOperadorSubtracao(charLeitura) && proximoEhNumero();
+	}
+
+	/**
+	 * Verifica se é um "-"
+	 * 
+	 * @param charLeitura
+	 * @return
+	 */
+	private boolean ehOperadorSubtracao(char charLeitura) {
+		return Operador.SUBTRACAO.getChar() == charLeitura;
 	}
 
 	/**

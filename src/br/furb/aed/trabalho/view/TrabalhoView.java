@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.furb.aed.trabalho.Calculadora;
+import br.furb.aed.trabalho.exception.ErroNaNException;
 import br.furb.aed.trabalho.facade.CalculadoraFacade;
 
 import java.awt.FlowLayout;
@@ -85,6 +86,8 @@ public class TrabalhoView {
 		try {
 			double valor = calculadoraFacade.calcularExpressao(txtExpressao.getText());
 			txtResultado.setText(String.valueOf(valor));
+		} catch (ErroNaNException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "O jovem não sabe matemática básica?", JOptionPane.ERROR_MESSAGE);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "O jovem não sabe como escrever uma expressão básica?", JOptionPane.ERROR_MESSAGE);
 		}
